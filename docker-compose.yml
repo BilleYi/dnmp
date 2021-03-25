@@ -29,10 +29,12 @@ services:
       - net-php71
       - net-php72
       - net-php74
+      - net-php80
     depends_on:
       - php71
       - php72
       - php74
+      - php80
 
   ### PHP FPM Container ###
   php71:
@@ -125,6 +127,38 @@ services:
       - elasticsearch
       - redis
 
+  php80:
+    build: ./core/images/php80
+    container_name: php80
+    volumes:
+      - type: bind
+        source: ./www
+        target: /var/www/html
+      - ./core/conf/php80/conf/php.ini:/etc/php8/php.ini:ro
+      - ./core/conf/php80/conf/php-fpm.conf:/etc/php8/php-fpm.conf:ro
+      - ./core/conf/php80/conf/php-fpm.d/www.conf:/etc/php8/php-fpm.d/www.conf:ro
+      - type: bind
+        source: ../.ssh
+        target: /root/.ssh
+      - type: bind
+        source: ./share-files
+        target: /var/www/share-files
+    ports:
+      - "3008:3008"
+      - "55729:55729"
+    expose:
+      - "9080"
+    restart: always
+    networks:
+      - net-php80
+      - net-mysql
+      - net-elasticsearch
+      - net-redis
+    depends_on:
+      - mysql
+      - elasticsearch
+      - redis
+
   ### MYSQL Container ###
   mysql:
     build: ./core/images/mysql
@@ -185,6 +219,8 @@ networks:
   net-php72:
     driver: bridge
   net-php74:
+    driver: bridge
+  net-php80:
     driver: bridge
   net-mysql:
     driver: bridge
