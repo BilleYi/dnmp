@@ -1,6 +1,6 @@
 FROM node:10.15.3-alpine
 
-MAINTAINER peter <peter@xulukun.cn>
+MAINTAINER leo <liyan3279@126.com>
 
 # Mirror mirror switch to Ali-OSM (Alibaba Open Source Mirror Site) - http://mirrors.aliyun.com/
 RUN echo 'https://mirrors.aliyun.com/alpine/edge/main' > /etc/apk/repositories  && \
@@ -44,19 +44,20 @@ RUN apk update && apk upgrade && \
         php7-fileinfo \
         php7-xml \
 	php7-sockets\
+        php7-sodium\
 # composer
         composer \
 # git
-        git \
+       #git \
 # git ssh
         bash \
         openssh && \
 # Cleaning up
     rm -rf /var/cache/apk/*
 
-RUN npm install -g cnpm --registry=https://registry.npm.taobao.org && \
-    yarn config set registry https://registry.npm.taobao.org && \
-    cnpm i -g grunt-cli gulp-cli
+#RUN npm install -g cnpm --registry=https://registry.npm.taobao.org && \
+ #   yarn config set registry https://registry.npm.taobao.org && \
+  #  cnpm i -g grunt-cli gulp-cli
 
 # Set Workdir
 WORKDIR /var/www/html
