@@ -43,7 +43,7 @@ RUN apk update && apk upgrade && \
         php7-session \
         php7-fileinfo \
         php7-xml \
-	php7-sockets\
+	    php7-sockets\
         php7-sodium\
         php7-xdebug \
 # composer
@@ -60,8 +60,14 @@ RUN apk update && apk upgrade && \
  #   yarn config set registry https://registry.npm.taobao.org && \
   #  cnpm i -g grunt-cli gulp-cli
 
+
 # Configuration xdebug
 COPY xdebug.ini /etc/php7/conf.d/
+
+#install n98-magerun2
+RUN wget https://files.magerun.net/n98-magerun2.phar && \
+    cp ./n98-magerun2.phar /usr/local/bin/ && \
+    chmod +x /usr/local/bin/n98-magerun2.phar
 
 # Set Workdir
 WORKDIR /var/www/html

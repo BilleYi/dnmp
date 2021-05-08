@@ -43,8 +43,8 @@ RUN apk update && apk upgrade && \
         php8-session \
         php8-fileinfo \
         php8-xml \
-	php8-sockets\
-	#php8-xdebug \
+	    php8-sockets\
+	    #php8-xdebug \
 
 # composer
         composer \
@@ -62,6 +62,11 @@ RUN apk update && apk upgrade && \
 
 #Configuration debug 3
 #COPY xdebug.ini /etc/php8/conf.d/
+
+#install n98-magerun2
+RUN wget https://files.magerun.net/n98-magerun2.phar && \
+    cp ./n98-magerun2.phar /usr/local/bin/ && \
+    chmod +x /usr/local/bin/n98-magerun2.phar
 
 # Set Workdir
 WORKDIR /var/www/html
