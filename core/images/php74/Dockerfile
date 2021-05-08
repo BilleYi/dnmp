@@ -59,10 +59,16 @@ RUN apk update && apk upgrade && \
  #   yarn config set registry https://registry.npm.taobao.org && \
   #  cnpm i -g grunt-cli gulp-cli
 
-#install n98-magerun2
+#install n98-magerun2 tool
 RUN wget https://files.magerun.net/n98-magerun2.phar && \
-    cp ./n98-magerun2.phar /usr/local/bin/ && \
-    chmod +x /usr/local/bin/n98-magerun2.phar
+    chmod +x ./n98-magerun2.phar && \
+    mv ./n98-magerun2.phar /usr/local/bin/n98
+    
+
+#install mg2-codegen tool
+RUN  wget https://github.com/staempfli/magento2-code-generator/releases/download/1.11.2/mg2-codegen.phar && \
+     chmod +x ./mg2-codegen.phar && \
+     mv ./mg2-codegen.phar /usr/local/bin/mg2-codegen
     
 # Set Workdir
 WORKDIR /var/www/html
