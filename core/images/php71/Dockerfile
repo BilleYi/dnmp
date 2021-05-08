@@ -46,9 +46,13 @@ RUN apk update && apk upgrade && \
         php7-tokenizer \
         php7-session \
         php7-fileinfo \
+  	php7-xdebug \
         php7-xml && \
 # Cleaning up
     rm -rf /var/cache/apk/*
+
+# Configuration xdebug
+COPY xdebug.ini /etc/php7/conf.d/
 
 # Set Workdir
 WORKDIR /var/www/html

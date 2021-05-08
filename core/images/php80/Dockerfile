@@ -44,6 +44,8 @@ RUN apk update && apk upgrade && \
         php8-fileinfo \
         php8-xml \
 	php8-sockets\
+	#php8-xdebug \
+
 # composer
         composer \
 # git
@@ -57,6 +59,9 @@ RUN apk update && apk upgrade && \
 #RUN npm install -g cnpm --registry=https://registry.npm.taobao.org && \
  #   yarn config set registry https://registry.npm.taobao.org && \
   #  cnpm i -g grunt-cli gulp-cli
+
+#Configuration debug 3
+#COPY xdebug.ini /etc/php8/conf.d/
 
 # Set Workdir
 WORKDIR /var/www/html

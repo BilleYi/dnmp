@@ -45,10 +45,11 @@ RUN apk update && apk upgrade && \
         php7-xml \
 	php7-sockets\
         php7-sodium\
+        php7-xdebug \
 # composer
         composer \
 # git
-       #git \
+       git \
 # git ssh
         bash \
         openssh && \
@@ -58,6 +59,9 @@ RUN apk update && apk upgrade && \
 #RUN npm install -g cnpm --registry=https://registry.npm.taobao.org && \
  #   yarn config set registry https://registry.npm.taobao.org && \
   #  cnpm i -g grunt-cli gulp-cli
+
+# Configuration xdebug
+COPY xdebug.ini /etc/php7/conf.d/
 
 # Set Workdir
 WORKDIR /var/www/html
