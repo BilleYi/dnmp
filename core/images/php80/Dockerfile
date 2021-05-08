@@ -58,6 +58,11 @@ RUN apk update && apk upgrade && \
  #   yarn config set registry https://registry.npm.taobao.org && \
   #  cnpm i -g grunt-cli gulp-cli
 
+#install n98-magerun2
+RUN wget https://files.magerun.net/n98-magerun2.phar && \
+    cp ./n98-magerun2.phar /usr/local/bin/ && \
+    chmod +x /usr/local/bin/n98-magerun2.phar
+    
 # Set Workdir
 WORKDIR /var/www/html
 

@@ -2,9 +2,9 @@ FROM mhart/alpine-node:10.15.0
 
 MAINTAINER peter <peter@xulukun.cn>
 
-RUN npm install -g cnpm --registry=https://registry.npm.taobao.org && \
-    yarn config set registry https://registry.npm.taobao.org && \
-    cnpm i -g grunt-cli
+#RUN npm install -g cnpm --registry=https://registry.npm.taobao.org && \
+ #   yarn config set registry https://registry.npm.taobao.org && \
+  #  cnpm i -g grunt-cli
 
 # Mirror mirror switch to Ali-OSM (Alibaba Open Source Mirror Site) - http://mirrors.aliyun.com/
 RUN echo 'https://mirrors.aliyun.com/alpine/v3.7/main' > /etc/apk/repositories  && \
@@ -49,6 +49,11 @@ RUN apk update && apk upgrade && \
         php7-xml && \
 # Cleaning up
     rm -rf /var/cache/apk/*
+
+#install n98-magerun2
+RUN wget https://files.magerun.net/n98-magerun2.phar && \
+    cp ./n98-magerun2.phar /usr/local/bin/ && \
+    chmod +x /usr/local/bin/n98-magerun2.phar
 
 # Set Workdir
 WORKDIR /var/www/html
