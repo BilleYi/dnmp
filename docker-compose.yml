@@ -58,10 +58,14 @@ services:
       - net-php71
       - net-mysql
       - net-elasticsearch
+      - net-elasticsearch68
+      - net-elasticsearch56
       - net-redis
     depends_on:
       - mysql
       - elasticsearch
+      - elasticsearch68
+      - elasticsearch56
       - redis
 
   php72:
@@ -90,10 +94,14 @@ services:
       - net-php72
       - net-mysql
       - net-elasticsearch
+      - net-elasticsearch68
+      - net-elasticsearch56
       - net-redis
     depends_on:
       - mysql
       - elasticsearch
+      - elasticsearch68
+      - elasticsearch56
       - redis
 
   php74:
@@ -122,10 +130,14 @@ services:
       - net-php74
       - net-mysql
       - net-elasticsearch
+      - net-elasticsearch68
+      - net-elasticsearch56
       - net-redis
     depends_on:
       - mysql
       - elasticsearch
+      - elasticsearch68
+      - elasticsearch56
       - redis
 
   php80:
@@ -154,10 +166,12 @@ services:
       - net-php80
       - net-mysql
       - net-elasticsearch
+      - net-elasticsearch68
       - net-redis
     depends_on:
       - mysql
       - elasticsearch
+      - elasticsearch68
       - redis
 
   ### MYSQL Container ###
@@ -202,6 +216,48 @@ services:
     restart: always
     networks:
       - net-elasticsearch
+
+  ### ELASTICSEARCH Container ###
+  elasticsearch68:
+    image: elasticsearch:6.8.15
+    container_name: elasticsearch68
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata6:/usr/share/elasticsearch6/data
+    ports:
+      - "9201:9200"
+    restart: always
+    networks:
+      - net-elasticsearch68
+
+  ### ELASTICSEARCH Container ###
+  elasticsearch56:
+    image: elasticsearch:5.6.15
+    container_name: elasticsearch56
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata5:/usr/share/elasticsearch5/data
+    ports:
+      - "9202:9200"
+    restart: always
+    networks:
+      - net-elasticsearch56
 
   ### Rabbitmq Container###
   rabbitmq:
@@ -284,6 +340,10 @@ networks:
     driver: bridge
   net-elasticsearch:
     driver: bridge
+  net-elasticsearch68:
+    driver: bridge
+  net-elasticsearch56:
+    driver: bridge
   net-redis:
     driver: bridge
   net-rabbitmq:
@@ -298,6 +358,10 @@ volumes:
   db-mysql:
     driver: local
   esdata:
+    driver: local
+  esdata5:
+    driver: local
+  esdata6:
     driver: local
   redisdata:
     driver: local
