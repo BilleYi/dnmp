@@ -129,12 +129,14 @@ services:
     networks:
       - net-php74
       - net-mysql
+      - net-mysql8
       - net-elasticsearch
       - net-elasticsearch68
       - net-elasticsearch56
       - net-redis
     depends_on:
       - mysql
+      - mysql8
       - elasticsearch
       - elasticsearch68
       - elasticsearch56
@@ -165,11 +167,13 @@ services:
     networks:
       - net-php80
       - net-mysql
+      - net-mysql8
       - net-elasticsearch
       - net-elasticsearch68
       - net-redis
     depends_on:
       - mysql
+      - mysql8
       - elasticsearch
       - elasticsearch68
       - redis
@@ -195,6 +199,28 @@ services:
     restart: always
     networks:
       - net-mysql
+  
+  ### MYSQL8 Container ###
+  mysql8:
+    build: ./core/images/mysql8
+    container_name: mysql8
+    volumes:
+      - type: volume
+        source: db-mysql8
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+      - ./core/conf/mysql8/conf/my.cnf:/etc/mysql/my.cnf:ro
+      - type: bind
+        source: ./share-files
+        target: /var/www/share-files
+    ports:
+      - "3308:3308"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    restart: always
+    networks:
+      - net-mysql8
 
   ### ELASTICSEARCH Container ###
   elasticsearch:
@@ -338,6 +364,8 @@ networks:
     driver: bridge
   net-mysql:
     driver: bridge
+  net-mysql8:
+    driver: bridge
   net-elasticsearch:
     driver: bridge
   net-elasticsearch68:
@@ -356,6 +384,8 @@ networks:
 ### Volumes Setup ###
 volumes:
   db-mysql:
+    driver: local
+  db-mysql8:
     driver: local
   esdata:
     driver: local
