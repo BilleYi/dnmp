@@ -285,6 +285,22 @@ services:
     networks:
       - net-elasticsearch56
 
+  ### KIBANA Container ###
+  kibana: 
+    image: docker.elastic.co/kibana/kibana:6.8.15
+    container_name: kibana6
+    volumes:
+      - ./core/conf/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports: 
+      - "5601:5601"
+    links:
+      - elasticsearch68
+    networks:
+      - net-elasticsearch68
+    depends_on:
+      - elasticsearch68
+
+
   ### Rabbitmq Container###
   rabbitmq:
     image: rabbitmq:3.8.3-management

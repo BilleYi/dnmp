@@ -1,0 +1,5 @@
+elasticsearch.hosts: http://elasticsearch68:9200
+i18n.locale: zh-CN
+server.name: kibana6
+server.host: "0"
+xpack.monitoring.ui.container.elasticsearch.enabled: true
