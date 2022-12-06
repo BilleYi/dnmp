@@ -7,8 +7,8 @@ MAINTAINER peter <peter@xulukun.cn>
   #  cnpm i -g grunt-cli
 
 # Mirror mirror switch to Ali-OSM (Alibaba Open Source Mirror Site) - http://mirrors.aliyun.com/
-RUN echo 'https://mirrors.aliyun.com/alpine/v3.7/main' > /etc/apk/repositories  && \
-	echo 'https://mirrors.aliyun.com/alpine/v3.7/community' >> /etc/apk/repositories
+# RUN echo 'http://mirrors.ustc.edu.cn/alpine/v3.7/main' > /etc/apk/repositories  && \
+	# echo 'http://mirrors.ustc.edu.cn/alpine/v3.7/community' >> /etc/apk/repositories
 	# && echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 # ensure www-data user exists
@@ -61,9 +61,9 @@ RUN wget https://files.magerun.net/n98-magerun2.phar && \
     
 
 #install mg2-codegen tool
-RUN  wget https://github.com/staempfli/magento2-code-generator/releases/download/1.11.2/mg2-codegen.phar && \
-     chmod +x ./mg2-codegen.phar && \
-     mv ./mg2-codegen.phar /usr/local/bin/mg2-codegen
+# RUN  wget https://github.com/staempfli/magento2-code-generator/releases/download/1.11.2/mg2-codegen.phar && \
+#      chmod +x ./mg2-codegen.phar && \
+#      mv ./mg2-codegen.phar /usr/local/bin/mg2-codegen
 
 # Set Workdir
 WORKDIR /var/www/html

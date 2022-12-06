@@ -229,7 +229,7 @@ services:
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - discovery.type=single-node
     ulimits:
       memlock:
@@ -250,14 +250,15 @@ services:
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx4g"
       - discovery.type=single-node
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
-      - esdata6:/usr/share/elasticsearch6/data
+      - ./esdata6:/usr/share/elasticsearch6/data
+      - ./plugins:/usr/share/elasticsearch6/plugins #插件文件挂载
     ports:
       - "9201:9200"
     restart: always
@@ -271,7 +272,7 @@ services:
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - discovery.type=single-node
     ulimits:
       memlock:
