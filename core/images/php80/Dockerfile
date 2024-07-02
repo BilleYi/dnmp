@@ -78,7 +78,7 @@ RUN wget https://files.magerun.net/n98-magerun2.phar && \
 WORKDIR /var/www/html
 
 # Expose ports
-EXPOSE 9080
+#EXPOSE 9080
 
 # Entry point
-CMD ["/usr/sbin/php-fpm8", "-R", "--nodaemonize"]
+#CMD ["/usr/sbin/php-fpm8", "-R", "--nodaemonize"]

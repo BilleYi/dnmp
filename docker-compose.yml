@@ -30,6 +30,7 @@ services:
       - net-php72
       - net-php74
       - net-php80
+      - net-php82
       - net-varnish60
       - net-varnish40
     depends_on:
@@ -37,6 +38,8 @@ services:
       - php72
       - php74
       - php80
+      - php82
+
   ### PHP FPM Container ###
   php71:
     build: ./core/images/php71
@@ -51,8 +54,8 @@ services:
       - type: bind
         source: ./share-files
         target: /var/www/share-files    
-    expose:
-      - "9000"
+    # expose:
+    #   - "9000"
     restart: always
     networks:
       - net-php71
@@ -178,7 +181,45 @@ services:
       - elasticsearch68
       - redis
 
-  ### MYSQL Container ###
+  php82:
+      build: ./core/images/php82
+      container_name: php82
+      volumes:
+        - type: bind
+          source: ./www
+          target: /var/www/html
+         - ./core/conf/php82/conf/php.ini:/usr/local/etc/php/php.ini:ro
+        # - ./core/conf/php82/conf/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
+        # - ./core/conf/php82/conf/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+        # - ./core/conf/php82/conf/php.ini:/etc/php82/php.ini:ro
+        # - ./core/conf/php82/conf/php-fpm.conf:/etc/php82/php-fpm.conf:ro
+        # - ./core/conf/php82/conf/php-fpm.d/www.conf:/etc/php82/php-fpm.d/www.conf:ro
+        - type: bind
+          source: ../.ssh
+          target: /root/.ssh
+        - type: bind
+          source: ./share-files
+          target: /var/www/share-files
+       #ports:
+       #- "3009:3009"
+       #- "55729:52729"
+      expose:
+        - "9000"
+      restart: always
+      networks:
+        - net-php82
+        - net-mysql8
+        # - net-elasticsearch
+        - net-elasticsearch68
+        - net-redis
+      depends_on:
+        - mysql
+        - mysql8
+        # - elasticsearch
+        - elasticsearch68
+        - redis
+
+### MYSQL Container ###
   mysql:
     build: ./core/images/mysql
     container_name: mysql
@@ -257,8 +298,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./esdata6:/usr/share/elasticsearch6/data
-      - ./plugins:/usr/share/elasticsearch6/plugins #插件文件挂载
+      - esdata6:/usr/share/elasticsearch6/data
     ports:
       - "9201:9200"
     restart: always
@@ -379,6 +419,8 @@ networks:
     driver: bridge
   net-php80:
     driver: bridge
+  net-php82:
+    driver: bridge    
   net-mysql:
     driver: bridge
   net-mysql8:
